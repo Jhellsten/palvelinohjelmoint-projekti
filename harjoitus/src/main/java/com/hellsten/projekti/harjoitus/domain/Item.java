@@ -94,7 +94,7 @@ public class Item {
 
     @Override
 	public String toString() {
-		return "Item [title=" + title + " description=" + description +  " year=" + year + " price=" + price + " category=" + category.getName() + " user=" + user.getName() + "]";
+		return "Item [title=" + title + " description=" + description +  " year=" + year + " price=" + price + " category=" + category.getName() + " user=" + user.getUsername() + "]";
 	}
 
 }
