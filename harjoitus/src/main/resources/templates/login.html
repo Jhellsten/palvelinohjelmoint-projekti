@@ -3,33 +3,28 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
         <title>Login to your personal sales account!</title>
-        <style>
-            label {
-                padding: 10px;
-                font-size: 20px;
-            }
-            #button {
-                font-size: 20px;
-                margin-top: 10px;
-                align-self: center;
-            }
-            h1 {
-                margin-top: 10%;
-            }
-        </style>
+        <!-- <link th:href="@{/css/base.css}" rel="stylesheet" /> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     </head>
-    <body style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-        <div th:if="${param.error}">
+    <body style="display: flex; flex-direction: column; justify-content: space-around; align-items: center; min-height: 60vh;">
+        <h2 th:if="${param.error}">
             Invalid username and password.
-        </div>
-        <div th:if="${param.logout}">
+        </h2>
+        <h2 th:if="${param.logout}">
             You have been logged out.
-        </div>
+        </h2>
         <h1>Welcome to the Marketplace!</h1>
-        <form style="display: flex; flex-direction: column; justify-content: space-around; align-items: flex-start;" th:action="@{/login}" method="post">
-            <label> User Name : <input type="text" name="username"/> </label>
-            <label> Password: <input type="password" name="password"/> </label>
-            <input id="button" type="submit" value="Login"/>
-        </form>
+        <h3>Please login in to you account!</h3>
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label> User Name : <input class="form-control" type="text" name="username"/> </label>
+            </div>
+            <div class="form-group">
+                <label> Password: <input class="form-control" type="password" name="password"/> </label>
+            </div>
+            <div class="form-group center">
+                <input class="btn btn-primary" type="submit" value="Login"/>
+            </div>
+            </form>
     </body>
 </html>
