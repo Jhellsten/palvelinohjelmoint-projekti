@@ -40,6 +40,7 @@ public class HarjoitusApplication {
 
 			items.save(new Item("Microwave", "Almost new Microwave for sale", 125.00, categories.findByName("Home").get(0), users.findByUsername("user")));
         	items.save(new Item("FIFA 2021", "Brand new!", 69.00, categories.findByName("Games").get(0), users.findByUsername("user")));
+        	items.save(new Item("Tennis bracket", "Brand new!", 180.00, categories.findByName("Sports").get(0), users.findByUsername("admin")));
 			
 			System.out.println("fetch all items");
 			for (Item Item : items.findAll()) {
