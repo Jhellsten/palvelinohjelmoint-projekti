@@ -16,7 +16,6 @@ public class Item {
     
     private String title;
     private String description;
-    private int year;
     private double price;
 
     @ManyToOne
@@ -27,12 +26,12 @@ public class Item {
     @JoinColumn(name = "userid")
     private User user;
 
-    public Item(String title, String description, int year, double price, Category category) {
+    public Item(String title, String description, double price, Category category, User user) {
         this.title = title;
         this.description = description;
-        this.year = year;
         this.price = price;
         this.category = category;
+        this.user = user;
     }
 
     public Item() {
@@ -55,14 +54,6 @@ public class Item {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 
     public String getDescription() {
@@ -94,7 +85,7 @@ public class Item {
 
     @Override
 	public String toString() {
-		return "Item [title=" + title + " description=" + description +  " year=" + year + " price=" + price + " category=" + category.getName() + " user=" + user.getUsername() + "]";
+		return "Item [title=" + title + " description=" + description +  " price=" + price + " category=" + category.getName() + " user=" + user.getUsername() + "]";
 	}
 
 }

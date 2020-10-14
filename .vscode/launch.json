@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-HarjoitusApplication<harjoitus>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.hellsten.projekti.harjoitus.HarjoitusApplication",
+            "projectName": "harjoitus",
+            "args": ""
+        }
+    ]
+}
