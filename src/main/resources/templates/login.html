@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Login to your personal sales account!</title>
+        <!-- <link th:href="@{/css/base.css}" rel="stylesheet" /> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    </head>
+    <body style="display: flex; flex-direction: column; justify-content: space-around; align-items: center; min-height: 60vh;">
+        <h2 th:if="${param.error}">
+            Invalid username and password.
+        </h2>
+        <h2 th:if="${param.logout}">
+            You have been logged out.
+        </h2>
+        <h1>Welcome to the Marketplace!</h1>
+        <h3>Please login in to you account!</h3>
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label> User Name : <input class="form-control" type="text" name="username"/> </label>
+            </div>
+            <div class="form-group">
+                <label> Password: <input class="form-control" type="password" name="password"/> </label>
+            </div>
+            <div class="form-group center">
+                <input class="btn btn-primary" type="submit" value="Login"/>
+            </div>
+            </form>
+    </body>
+</html>

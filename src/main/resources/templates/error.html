@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Marketplace - Error</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    </head>
+    <body style="display: flex; flex-direction: column; justify-content: space-around; align-items: center; min-height: 60vh;">
+        <h1>There was an unexpected error!</h1>
+        <button th:onclick="'window.location.href=\'/' + '\''"  class="btn btn-primary">Click to go back to main page</button>
+    </body>
+</html>

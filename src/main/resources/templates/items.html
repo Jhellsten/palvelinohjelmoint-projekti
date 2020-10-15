@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Marketplace</title>
+    <link th:href="@{/css/items.css}" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style="margin: 20px">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5%;">
+        <h1>Welcome to the marketplace!</h1>
+        <div th:if="${#httpServletRequest.remoteUser}">
+            <h3 th:inline="text">You are logged in as [[${#httpServletRequest.remoteUser}]]!</h3>
+        </div>
+        <div th:if="${#httpServletRequest.remoteUser}">
+            <form th:action="@{/logout}" method="post">
+                <input class="btn btn-primary"  type="submit" value="Logout"/>
+            </form>   
+        </div>
+        <div th:if="${#httpServletRequest.remoteUser}">
+            <button th:onclick="'window.location.href=\'/newItem/' + '\''" class="btn btn-warning">Add new Item</button>
+        </div>
+        <div th:unless="${#httpServletRequest.remoteUser}">
+            <form th:action="@{/login}" method="post">
+                <input class="btn btn-primary"  type="submit" value="Login"/>
+            </form>   
+        </div>
+        <div th:unless="${#httpServletRequest.remoteUser}">
+            <form th:action="@{/signup}" method="post">
+                <input class="btn btn-secondary"  type="submit" value="Signup"/>
+            </form>   
+        </div>
+          
+    </div>
+    <h3 style="text-align: center; margin-bottom: 2rem;">All items for sale currently</h3>
+    <div class="card-columns">
+        <div th:each="item : ${items}" class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title" th:text=${item.title}></h5>
+              <p class="card-text" th:text=${item.description}></p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" th:text="'Price: ' + ${item.price} +  ' €'"></li>
+              <li class="list-group-item" th:text="'Category: ' + ${item.category.name}"></li>
+              <li class="list-group-item" th:text="'Seller: ' + ${item.user.username}"></li>
+
+              <li class="list-group-item" th:if="${item.user.username} == ${#httpServletRequest.remoteUser}">
+                <td sec:authorize="hasRole('USER')"> <button th:onclick="'window.location.href=\'/edit/' + ${item.id} + '\''" class="btn btn-warning">Edit <a ></a></button></td>
+                <td sec:authorize="hasRole('USER')"> <button th:onclick="'window.location.href=\'/delete/' + ${item.id} + '\''" class="btn btn-danger">Delete</button></td>
+              </li>  
+            </ul>
+          </div>
+    </div>
+    
+
+</body>
+</html>
