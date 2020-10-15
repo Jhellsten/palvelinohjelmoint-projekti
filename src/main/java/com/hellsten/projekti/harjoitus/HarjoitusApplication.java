@@ -36,13 +36,13 @@ public class HarjoitusApplication {
 			// Read data from JSON and seed database according to that
 			Random random = new Random();
 			ObjectMapper mapper = new ObjectMapper();
-			File usersfile = ResourceUtils.getFile(this.getClass().getResource("users.json"));
+			File usersfile = ResourceUtils.getFile(this.getClass().getResource("classpath:users.json"));
 			TypeReference<List<User>> userTypeReference = new TypeReference<List<User>>(){};
 			InputStream userInputStream = new FileInputStream(usersfile);
-			File categoriesfile = ResourceUtils.getFile(this.getClass().getResource("categories.json"));
+			File categoriesfile = ResourceUtils.getFile(this.getClass().getResource("classpath:categories.json"));
 			TypeReference<List<Category>> categoryTypeReference = new TypeReference<List<Category>>(){};
 			InputStream categoryInputStream = new FileInputStream(categoriesfile);
-			File itemsfile = ResourceUtils.getFile(this.getClass().getResource("items.json"));
+			File itemsfile = ResourceUtils.getFile(this.getClass().getResource("classpath:items.json"));
 			TypeReference<List<Item>> itemTypeReference = new TypeReference<List<Item>>(){};
 			InputStream itemInputStream = new FileInputStream(itemsfile);
 			try {
