@@ -17,6 +17,9 @@
                 <input class="btn btn-primary"  type="submit" value="Logout"/>
             </form>   
         </div>
+        <div th:if="${#httpServletRequest.remoteUser}">
+            <button th:onclick="'window.location.href=\'/newItem/' + '\''" class="btn btn-warning">Add new Item</button>
+        </div>
         <div th:unless="${#httpServletRequest.remoteUser}">
             <form th:action="@{/login}" method="post">
                 <input class="btn btn-primary"  type="submit" value="Login"/>

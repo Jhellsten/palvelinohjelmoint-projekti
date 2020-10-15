@@ -1,21 +1,28 @@
 package com.hellsten.projekti.harjoitus.domain;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+
 
 @Entity
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
+
+    @NotEmpty(message = "Title cannot be empty")
     private String title;
+
+    @NotEmpty(message = "Description cannot be empty")
     private String description;
+
+    @Min(0)
     private double price;
 
     @ManyToOne

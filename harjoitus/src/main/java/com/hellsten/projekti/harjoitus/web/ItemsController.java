@@ -35,6 +35,11 @@ public class ItemsController {
     private CategoryRepo categories;
     @Autowired
     private UserRepo users;
+    
+    // @RequestMapping(value = "/error", method = RequestMethod.GET)
+    // public String errorPage() {
+    //     return "error";
+    // }
 
     // REST API for all items
     @RequestMapping(value="/items", method = RequestMethod.GET)
@@ -72,7 +77,7 @@ public class ItemsController {
     public String newItem(Model model) {
     model.addAttribute("item", new Item());
     model.addAttribute("categories", categories.findAll());
-    return "additem";
+    return "newitem";
     }   
 
     // REST API for get item by id
@@ -84,7 +89,7 @@ public class ItemsController {
     // REST API for Save new item
     @JsonBackReference(value = "category")
     @RequestMapping(value="/items",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     Item saveApiItem(@RequestBody Item item) {
     return items.save(item);
     }   
@@ -92,7 +97,7 @@ public class ItemsController {
     // REST API for edit existing item
     @JsonBackReference(value = "category")
     @RequestMapping(value="/items/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     Item saveApiItem(@RequestBody Item item, @PathVariable("id") Long itemId) {
         return items.findById(itemId)
         .map(existingItem -> {
@@ -119,7 +124,7 @@ public class ItemsController {
 
     // Save new item
     @RequestMapping(value = "/newitem", method = RequestMethod.POST)
-    // @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     public String saveItem(@ModelAttribute Item item, Model model) {
     System.out.println(item);
     items.save(item);
@@ -128,8 +133,11 @@ public class ItemsController {
 
     // Get signup
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String signup() {
-    return "signup";
+    public String signup(Model model) {
+        User newUser = new User();
+        newUser.setRole("USER");
+        model.addAttribute("user", newUser);
+        return "signup";
     }   
 
     // Save new user
@@ -138,9 +146,8 @@ public class ItemsController {
         System.out.println(users.findByUsername(user.getUsername()));
         if (bindingResults.hasErrors()) {
             System.out.println(bindingResults);
-			return "form";
-		}
-
+			return "signup";
+        }
     if(users.findByUsername(user.getUsername()) == null) {
         user.setPasswordHash(BCrypt.hashpw(user.getPasswordHash(), BCrypt.gensalt(13)));
         user.setRole("USER");

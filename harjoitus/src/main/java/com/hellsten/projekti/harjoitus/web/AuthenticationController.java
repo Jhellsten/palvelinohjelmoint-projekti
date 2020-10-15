@@ -32,7 +32,7 @@ public class AuthenticationController {
     // Redirect to login
     @RequestMapping(value="/", method = RequestMethod.GET)
         public String home() {
-        return "login";
+        return "redirect:index";
     }
    
 }

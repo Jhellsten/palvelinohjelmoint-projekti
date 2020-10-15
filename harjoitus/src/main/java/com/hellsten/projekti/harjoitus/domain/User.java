@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class User {
@@ -19,12 +20,16 @@ public class User {
         private Long id;
         
         // Username with unique constraint
+        
+        @NotEmpty(message = "Username cannot be empty")
         @Column(name = "username", nullable = false, unique = true)
         private String username;
         
+        @NotEmpty(message = "You need to have password")
         @Column(name = "password", nullable = false)
         private String passwordHash;
         
+        @NotEmpty(message = "You need to have a role")
         @Column(name = "role", nullable = false)
         private String role;
 
