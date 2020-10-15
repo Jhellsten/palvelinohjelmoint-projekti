@@ -24,7 +24,7 @@ public class AuthenticationController {
     @RequestMapping(value="/login", method = RequestMethod.GET)
         public String login() {
         if(isAuthenticated() == true) {
-            return "items";
+            return "index";
         }
         return "login";
     }
