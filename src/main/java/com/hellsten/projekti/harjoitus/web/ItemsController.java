@@ -14,7 +14,9 @@ import com.hellsten.projekti.harjoitus.domain.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,10 +38,10 @@ public class ItemsController {
     @Autowired
     private UserRepo users;
     
-    // @RequestMapping(value = "/error", method = RequestMethod.GET)
-    // public String errorPage() {
-    //     return "error";
-    // }
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    public String errorPage() {
+        return "error";
+    }
 
     // REST API for all items
     @RequestMapping(value="/items", method = RequestMethod.GET)
@@ -52,10 +54,14 @@ public class ItemsController {
     public String getItems(Model model) {
         List<Item> allItems = items.findAll();
         model.addAttribute("items", allItems);
-        for (Item item : allItems) {
-            System.out.println(item);
-        }
         return "items";
+    }
+
+    @RequestMapping(value="/", method = RequestMethod.GET)
+        public String home(Model model) {
+            List<Item> allItems = items.findAll();
+            model.addAttribute("items", allItems);
+            return "items";
     }
 
     // REST API for delete item
@@ -66,10 +72,9 @@ public class ItemsController {
 
     // Delete item by id
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ADMIN')")
     public String deleteItem(@PathVariable("id") Long itemId, Model model) {
     items.deleteById(itemId);
-    return "redirect:../index";
+    return "items";
     }   
 
     // Get values for new item
@@ -124,11 +129,36 @@ public class ItemsController {
 
     // Save new item
     @RequestMapping(value = "/newitem", method = RequestMethod.POST)
-    @PreAuthorize("hasRole('USER')")
-    public String saveItem(@ModelAttribute Item item, Model model) {
-    System.out.println(item);
-    items.save(item);
-    return "redirect:index";
+    public String saveItem(@Valid @ModelAttribute("item") Item item, BindingResult bindingResults, @CurrentSecurityContext(expression="authentication.name")
+    String username) {
+        if (bindingResults.hasErrors()) {
+			return "newitem";
+        }
+        User user = users.findByUsername(username);
+        System.out.println(username);
+        if(user == null) {
+            return "items";
+        }
+        item.setUser(user);
+        items.save(item);
+        return "items";
+    }   
+
+    // Save new item
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public String updateItem(@PathVariable("id") Long itemId, @Valid @ModelAttribute("item") Item item, BindingResult bindingResults, @CurrentSecurityContext(expression="authentication.name")
+    String username) {
+        if (bindingResults.hasErrors()) {
+			return "/edit/" + itemId;
+        }
+        User user = users.findByUsername(username);
+        System.out.println(username);
+        if(user == null) {
+            return "items";
+        }
+        item.setUser(user);
+        items.save(item);
+        return "items";
     }   
 
     // Get signup
@@ -142,20 +172,17 @@ public class ItemsController {
 
     // Save new user
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String saveUser(@Valid User user, BindingResult bindingResults) {
-        System.out.println(users.findByUsername(user.getUsername()));
+    public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResults) {
         if (bindingResults.hasErrors()) {
-            System.out.println(bindingResults);
 			return "signup";
         }
     if(users.findByUsername(user.getUsername()) == null) {
         user.setPasswordHash(BCrypt.hashpw(user.getPasswordHash(), BCrypt.gensalt(13)));
         user.setRole("USER");
-        System.out.println(user);
         users.save(user);
     }
     
-    return "redirect:index";
+    return "login";
     }   
 
 }

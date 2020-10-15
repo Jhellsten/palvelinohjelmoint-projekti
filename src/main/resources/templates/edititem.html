@@ -9,16 +9,19 @@
 <body style="margin: 20px">
     <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
         <h1>Edit Item</h1>
-    <form action="#" th:action="@{/newitem}" th:object="${item}" method="post">
+    <form action="#" th:action="@{/edit/} + ${id}" th:object="${item}" method="POST">
         <div class="form-group">
             <lable>Title: <input class="form-control" type="text" th:field="*{title}" placeholder="${item.title}" /></label>
         </div>
+        <label th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</label>
         <div class="form-group">
             <label>Description: <input class="form-control" type="text" th:field="*{description}" placeholder="${item.description}"/></label>
         </div>
+        <label th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</label>
         <div class="form-group">
             <label>Price: <input class="form-control" type="number" th:field="*{price}" placeholder="${item.price}" /></label>
         </div>
+        <label th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</label>
         <div class="form-group">
             <label for="categories">Category</label>
 			 <select class="custom-select" id="categories" th:field="*{category}" >

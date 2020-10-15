@@ -8,19 +8,17 @@
     <body style="display: flex; flex-direction: column; justify-content: space-around; align-items: center; min-height: 60vh;">
         <h1>Welcome to the Marketplace!</h1>
         <h3>You can create your account here!</h3>
-        <form th:action="@{/signup}" method="post">
+        <form th:action="@{/signup}" th:object="${user}" method="post">
             <div class="form-group">
                 <label> User Name : <input class="form-control" type="text" name="username"/> </label>
-                <!-- <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</label> -->
+                <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</label>
             </div>
             <div class="form-group">
                 <label> Password: <input class="form-control" type="password" name="passwordHash"/> </label>
-                <!-- <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</label> -->
-            </div>
-            <div class="form-group">
-                <label> Password again: <input class="form-control" type="password" name="passwordHash"/> </label>
+                <label th:if="${#fields.hasErrors('passwordHash')}" th:errors="*{passwordHash}">Name Error</label>
             </div>
             <div class="form-group center">
+                <input type="hidden" th:field="*{role}" name="role" value="USER" />
                 <input class="btn btn-primary" type="submit" value="Create account"/>
             </div>
             </form>

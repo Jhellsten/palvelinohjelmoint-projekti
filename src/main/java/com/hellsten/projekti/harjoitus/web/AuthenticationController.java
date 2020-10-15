@@ -28,11 +28,5 @@ public class AuthenticationController {
         }
         return "login";
     }
-
-    // Redirect to login
-    @RequestMapping(value="/", method = RequestMethod.GET)
-        public String home() {
-        return "redirect:index";
-    }
    
 }

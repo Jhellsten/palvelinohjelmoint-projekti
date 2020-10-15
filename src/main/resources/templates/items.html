@@ -8,6 +8,9 @@
 </head>
 <body style="margin: 20px">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5%;">
+        <h2 th:if="${param.logout}">
+            You have been logged out.
+        </h2>
         <h1>Welcome to the marketplace!</h1>
         <div th:if="${#httpServletRequest.remoteUser}">
             <h3 th:inline="text">You are logged in as [[${#httpServletRequest.remoteUser}]]!</h3>
