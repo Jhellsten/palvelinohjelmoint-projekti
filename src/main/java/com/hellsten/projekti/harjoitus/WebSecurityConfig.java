@@ -29,15 +29,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/login", "/index", "/signup").permitAll()
+                .antMatchers("/", "/login", "/index", "/signup", "/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/index", true)
+                .defaultSuccessUrl("/", true)
                 .permitAll()
                 .and()
             .logout()
+            .logoutSuccessUrl("/")
                 .permitAll();
     }
 
