@@ -1,0 +1,22 @@
+[
+    {
+        "title": "New jacket",
+        "description": "Unused jacket for sale",
+        "price": 60
+    },
+    {
+        "title": "New TV",
+        "description": "Brand new 60 inch TV",
+        "price": 600
+    },
+    {
+        "title": "Baseball bat",
+        "description": "Used and broken bat",
+        "price": 5
+    },
+    {
+        "title": "iPhone 11",
+        "description": "Used iPhone 11",
+        "price": 400
+    }
+]
