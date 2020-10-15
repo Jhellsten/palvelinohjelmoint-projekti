@@ -29,7 +29,6 @@ public class User {
         @Column(name = "password", nullable = false)
         private String passwordHash;
         
-        @NotEmpty(message = "You need to have a role")
         @Column(name = "role", nullable = false)
         private String role;
 
