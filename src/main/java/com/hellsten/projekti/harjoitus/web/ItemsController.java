@@ -74,7 +74,7 @@ public class ItemsController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteItem(@PathVariable("id") Long itemId, Model model) {
     items.deleteById(itemId);
-    return "items";
+    return "redirect:/";
     }   
 
     // Get values for new item
@@ -137,11 +137,11 @@ public class ItemsController {
         User user = users.findByUsername(username);
         System.out.println(username);
         if(user == null) {
-            return "items";
+            return "redirect:/";
         }
         item.setUser(user);
         items.save(item);
-        return "items";
+        return "redirect:/";
     }   
 
     // Save new item
@@ -158,7 +158,7 @@ public class ItemsController {
         }
         item.setUser(user);
         items.save(item);
-        return "items";
+        return "redirect:/";
     }   
 
     // Get signup
