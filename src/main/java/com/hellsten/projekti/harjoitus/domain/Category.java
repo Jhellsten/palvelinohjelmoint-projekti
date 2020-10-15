@@ -44,11 +44,11 @@ public class Category {
         this.name = name;
     }
 
-    public List<Item> getBooks() {
+    public List<Item> getItems() {
 		return items;
 	}
 
-	public void setBooks(List<Item> items) {
+	public void setItems(List<Item> items) {
 		this.items = items;
     }
     
