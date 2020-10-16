@@ -148,7 +148,7 @@ public class ItemsController {
     public String updateItem(@PathVariable("id") Long itemId, @Valid @ModelAttribute("item") Item item, BindingResult bindingResults, @CurrentSecurityContext(expression="authentication.name")
     String username) {
         if (bindingResults.hasErrors()) {
-			return "/edit/" + itemId;
+			return "editItem";
         }
         User user = users.findByUsername(username);
         System.out.println(username);
