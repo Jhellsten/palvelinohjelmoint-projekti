@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Random;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hellsten.projekti.harjoitus.domain.Category;
@@ -16,15 +15,21 @@ import com.hellsten.projekti.harjoitus.domain.ItemRepo;
 import com.hellsten.projekti.harjoitus.domain.User;
 import com.hellsten.projekti.harjoitus.domain.UserRepo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.util.ResourceUtils;
 
 @SpringBootApplication
 public class HarjoitusApplication {
+
+	@Autowired
+	private ResourceLoader resourceLoader;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HarjoitusApplication.class, args);
@@ -36,15 +41,15 @@ public class HarjoitusApplication {
 			// Read data from JSON and seed database according to that
 			Random random = new Random();
 			ObjectMapper mapper = new ObjectMapper();
-			File usersfile = ResourceUtils.getFile(this.getClass().getResource("classpath:users.json"));
+			Resource usersfile = resourceLoader.getResource("classpath:users.json");
 			TypeReference<List<User>> userTypeReference = new TypeReference<List<User>>(){};
-			InputStream userInputStream = new FileInputStream(usersfile);
-			File categoriesfile = ResourceUtils.getFile(this.getClass().getResource("classpath:categories.json"));
+			InputStream userInputStream = usersfile.getInputStream();
+			Resource categoriesfile = resourceLoader.getResource("classpath:categories.json");
 			TypeReference<List<Category>> categoryTypeReference = new TypeReference<List<Category>>(){};
-			InputStream categoryInputStream = new FileInputStream(categoriesfile);
-			File itemsfile = ResourceUtils.getFile(this.getClass().getResource("classpath:items.json"));
+			InputStream categoryInputStream = categoriesfile.getInputStream();
+			Resource itemsfile = resourceLoader.getResource("classpath:items.json");
 			TypeReference<List<Item>> itemTypeReference = new TypeReference<List<Item>>(){};
-			InputStream itemInputStream = new FileInputStream(itemsfile);
+			InputStream itemInputStream = itemsfile.getInputStream();
 			try {
 				List<User> mappedUsers = mapper.readValue(userInputStream,userTypeReference);
 				for (User user : mappedUsers) {
