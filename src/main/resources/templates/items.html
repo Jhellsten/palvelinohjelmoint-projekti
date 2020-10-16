@@ -24,12 +24,12 @@
             <button th:onclick="'window.location.href=\'/newItem/' + '\''" class="btn btn-warning">Add new Item</button>
         </div>
         <div th:unless="${#httpServletRequest.remoteUser}">
-            <form th:action="@{/login}" method="post">
+            <form th:action="@{/login}" method="get">
                 <input class="btn btn-primary"  type="submit" value="Login"/>
             </form>   
         </div>
         <div th:unless="${#httpServletRequest.remoteUser}">
-            <form th:action="@{/signup}" method="post">
+            <form th:action="@{/signup}" method="get">
                 <input class="btn btn-secondary"  type="submit" value="Signup"/>
             </form>   
         </div>
